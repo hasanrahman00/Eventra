@@ -39,13 +39,11 @@ export const legalLinks = [
   { label: 'Terms of Service', to: '/terms' },
 ]
 
-export const primaryNav = [
-  {
-    label: 'Event Data', type: 'mega', to: '/event-data', panelLabel: 'Browse event data',
-    hubs: eventDataHubs, featured: eventDataFeatured,
-    cta: { label: 'Explore all event data', to: '/event-data' },
-  },
-  { label: 'Solutions', type: 'list', to: '/solutions', links: solutionLinks },
-  { label: 'Resources', type: 'list', to: '/blog', links: resourceLinks },
-  { label: 'Company', type: 'list', to: '/about', links: companyLinks },
+// Flat header navigation — a simple, dropdown-free events-site menu.
+export const headerNav = [
+  { label: 'Home', to: '/' },
+  { label: 'Events', to: '/event-data' },
+  { label: 'Resources', to: '/blog' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Contact Us', to: '/contact' },
 ]
