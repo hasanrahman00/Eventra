@@ -65,11 +65,11 @@ export default function EventData() {
             const Icon = icon(a.icon)
             return (
               <Reveal key={a.title} delay={i * 0.06}>
-                <Link to={a.to} className="group flex h-full flex-col rounded-2xl border border-surface-muted bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+                <Link to={a.to} className="group flex h-full flex-col rounded-2xl border border-surface-muted bg-card p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
                   <span className="inline-grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white"><Icon className="h-5 w-5" /></span>
                   <h3 className="mt-4 text-lg font-bold text-ink">{a.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{a.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">View {a.title.toLowerCase()} <ArrowRight className="h-3.5 w-3.5" /></span>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">View {a.title.toLowerCase()} <ArrowRight className="h-3.5 w-3.5" /></span>
                 </Link>
               </Reveal>
             )
@@ -85,7 +85,7 @@ export default function EventData() {
             const Icon = icon(ic)
             return (
               <Reveal key={label} delay={(i % 4) * 0.05}>
-                <div className="flex items-center gap-3 rounded-2xl border border-surface-muted bg-white p-4 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+                <div className="flex items-center gap-3 rounded-2xl border border-surface-muted bg-card p-4 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600"><Icon className="h-5 w-5" /></span>
                   <span className="text-sm font-semibold text-ink">{label}</span>
                 </div>
@@ -100,7 +100,7 @@ export default function EventData() {
         <SectionHeading eyebrow="Browse by region" title="Global coverage, local accuracy" description="Reach the right buyers wherever the show is — with region-aware fields and compliance." />
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           {regions.map((r) => (
-            <span key={r} className="rounded-full border border-surface-muted bg-white px-5 py-2.5 text-sm font-semibold text-ink shadow-soft">{r}</span>
+            <span key={r} className="rounded-full border border-surface-muted bg-card px-5 py-2.5 text-sm font-semibold text-ink shadow-soft">{r}</span>
           ))}
         </div>
       </Section>
@@ -113,7 +113,7 @@ export default function EventData() {
             const Icon = icon(e.icon)
             return (
               <Reveal key={e.title} delay={(i % 4) * 0.05}>
-                <div className="h-full rounded-2xl border border-surface-muted bg-white p-6 shadow-soft">
+                <div className="h-full rounded-2xl border border-surface-muted bg-card p-6 shadow-soft">
                   <span className="inline-grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600"><Icon className="h-5 w-5" /></span>
                   <h3 className="mt-4 text-base font-bold text-ink">{e.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-muted">{e.body}</p>

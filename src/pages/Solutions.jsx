@@ -44,13 +44,13 @@ export default function Solutions() {
             const Icon = getIcon(iconBySlug[s.slug])
             return (
               <Reveal key={s.path} delay={(i % 3) * 0.06}>
-                <Link to={s.path} className="group flex h-full flex-col rounded-2xl border border-surface-muted bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+                <Link to={s.path} className="group flex h-full flex-col rounded-2xl border border-surface-muted bg-card p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
                   <span className="inline-grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white">
                     <Icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-4 text-lg font-bold text-ink">{s.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{s.blurb}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">Learn more <ArrowRight className="h-3.5 w-3.5" /></span>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">Learn more <ArrowRight className="h-3.5 w-3.5" /></span>
                 </Link>
               </Reveal>
             )

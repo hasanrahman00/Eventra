@@ -23,10 +23,10 @@ export default function CaseStudies() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {caseStudyPosts.map((c, i) => (
               <Reveal key={c.path} delay={(i % 3) * 0.06}>
-                <Link to={c.path} className="group flex h-full flex-col justify-between rounded-2xl border border-surface-muted bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+                <Link to={c.path} className="group flex h-full flex-col justify-between rounded-2xl border border-surface-muted bg-card p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
                   <div>
-                    <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700">{c.category}</span>
-                    <h3 className="mt-4 text-lg font-bold text-ink group-hover:text-brand-700">{c.title}</h3>
+                    <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-accent">{c.category}</span>
+                    <h3 className="mt-4 text-lg font-bold text-ink group-hover:text-accent">{c.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-ink-muted line-clamp-3">{c.excerpt}</p>
                   </div>
                   {c.headline && (

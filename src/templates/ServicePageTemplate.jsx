@@ -61,7 +61,7 @@ export default function ServicePageTemplate({ page }) {
       {page.deliverables?.length > 0 && (
         <Section tone="subtle">
           <SectionHeading eyebrow="Included" title="What’s included" />
-          <div className="mt-10 rounded-4xl border border-surface-muted bg-white p-7 shadow-soft sm:p-10">
+          <div className="mt-10 rounded-4xl border border-surface-muted bg-card p-7 shadow-soft sm:p-10">
             <CheckList items={page.deliverables} columns={2} />
           </div>
         </Section>

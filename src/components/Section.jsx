@@ -4,8 +4,8 @@ import Reveal from './Reveal.jsx'
 const tones = {
   default: 'bg-surface text-ink',
   subtle: 'bg-surface-subtle text-ink',
-  muted: 'bg-surface-muted text-ink',
-  night: 'bg-night text-white',
+  muted: 'bg-navy-soft text-ink',
+  night: 'bg-navy text-ink',
 }
 
 export function Section({ children, className, tone = 'default', id }) {
@@ -16,34 +16,22 @@ export function Section({ children, className, tone = 'default', id }) {
   )
 }
 
-export function SectionHeading({
-  eyebrow, title, description, align = 'center', light = false, className,
-}) {
+export function SectionHeading({ eyebrow, title, description, align = 'center', className }) {
+  const left = align === 'left'
   return (
-    <Reveal
-      className={cn(
-        'max-w-2xl',
-        align === 'center' && 'mx-auto text-center',
-        align === 'left' && 'text-left',
-        className,
-      )}
-    >
-      {eyebrow && (
-        <span className={cn('eyebrow', light && 'text-accent-soft', align === 'center' && 'justify-center')}>
-          <span className={cn('h-px w-6', light ? 'bg-accent-soft/50' : 'bg-brand-400/50')} />
-          {eyebrow}
-        </span>
-      )}
-      {title && (
-        <h2 className={cn('mt-4 text-3xl font-extrabold leading-tight tracking-tight text-balance sm:text-4xl', light ? 'text-white' : 'text-ink')}>
-          {title}
-        </h2>
-      )}
-      {description && (
-        <p className={cn('mt-4 text-lg leading-relaxed text-pretty', light ? 'text-white/70' : 'text-ink-muted')}>
-          {description}
-        </p>
-      )}
+    <Reveal className={cn('max-w-2xl', left ? 'text-left' : 'mx-auto text-center', className)}>
+      <div className={cn(left && 'accent-bar')}>
+        {eyebrow && (
+          <span className={cn('eyebrow', !left && 'justify-center')}>
+            {!left && <span className="h-px w-6 bg-accent/50" />}
+            {eyebrow}
+          </span>
+        )}
+        {title && (
+          <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-balance text-white sm:text-4xl">{title}</h2>
+        )}
+      </div>
+      {description && <p className="mt-4 text-lg leading-relaxed text-ink-muted text-pretty">{description}</p>}
     </Reveal>
   )
 }

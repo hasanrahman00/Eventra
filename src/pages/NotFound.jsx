@@ -5,7 +5,7 @@ import useSeo from '../lib/useSeo.js'
 export default function NotFound() {
   useSeo({ title: 'Page not found' })
   return (
-    <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-white">
+    <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-surface">
       <div className="pointer-events-none absolute inset-0 bg-grid-faint [background-size:46px_46px] opacity-50 [mask-image:radial-gradient(100%_80%_at_50%_30%,#000,transparent_75%)]" />
       <div className="container-shell relative text-center">
         <div className="font-display text-7xl font-extrabold text-gradient sm:text-8xl">404</div>

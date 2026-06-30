@@ -32,7 +32,7 @@ export default function Contact() {
               {infoCards.map((c) => {
                 const Icon = c.icon
                 const body = (
-                  <div className="flex items-center gap-3.5 rounded-2xl border border-surface-muted bg-white px-4 py-3.5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+                  <div className="flex items-center gap-3.5 rounded-2xl border border-surface-muted bg-card px-4 py-3.5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600"><Icon className="h-5 w-5" /></span>
                     <span>
                       <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">{c.label}</span>

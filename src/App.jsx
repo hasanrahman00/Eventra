@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import FloatingWidgets from './components/FloatingWidgets.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import { getContentRoutes } from './data/registry.jsx'
 
@@ -35,6 +36,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <FloatingWidgets />
     </div>
   )
 }

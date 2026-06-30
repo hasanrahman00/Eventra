@@ -1,169 +1,214 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Database, BadgeCheck, Megaphone, Rocket } from 'lucide-react'
+import { ArrowRight, BadgeCheck, CalendarDays, Search, UserCheck, ShieldCheck, Send, Building2, RefreshCw, Megaphone, Database, FileCheck2, Star } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import { Section, SectionHeading } from '../components/Section.jsx'
-import { Marquee, FeatureCards, Steps, StatGrid, TestimonialCard, CTABand } from '../components/blocks.jsx'
+import { Counter, FeatureCards, FAQ, TestimonialCard, Marquee } from '../components/blocks.jsx'
 import Button from '../components/Button.jsx'
 import Reveal from '../components/Reveal.jsx'
 import useSeo from '../lib/useSeo.js'
 import brand from '../site/brand.js'
 import testimonials from '../data/pages/testimonials.js'
-import { caseStudyPosts, blogPosts } from '../data/collections.js'
 
+const categories = ['Trade Shows', 'Summit & Forums', 'Exhibitions', 'Conferences']
 const clients = ['Helix', 'Cargoline', 'Brightloom', 'Northwind', 'Vantage', 'Cadence', 'Pinnacle', 'Orbit', 'Kestrel', 'Meridian']
 
-const valueProps = [
-  { icon: 'BadgeCheck', title: 'Verified before delivery', body: 'Every record clears a multi-step validation pipeline, so deliverability stays high and your sender reputation stays clean.' },
-  { icon: 'CalendarDays', title: 'Mapped to the show', body: 'Contacts are tied to the specific event, edition and audience — not a generic database dump that’s months out of date.' },
-  { icon: 'ShieldCheck', title: 'Opt-in & compliant', body: 'Sourced through a documented opt-in process and aligned with GDPR, CAN-SPAM and CASL so legal signs off fast.' },
-  { icon: 'Target', title: 'Built around your plan', body: 'Tell us the shows and audiences that matter — we build to your target list, not a one-size-fits-all template.' },
+const stats = [
+  { value: '40K+', label: 'Events database' },
+  { value: '96%', label: 'Assured data quality' },
+  { value: '2 Days', label: 'On-time data delivery' },
+  { value: '120M+', label: 'Attendee contacts' },
 ]
 
-const solutions = [
-  { Icon: Database, title: 'Event Data', body: 'Verified attendee, exhibitor and visitor lists by show, audience, industry and region.', to: '/event-data' },
-  { Icon: BadgeCheck, title: 'Data Services', body: 'Verify, append and enrich your event records to cut bounces and fill the gaps.', to: '/solutions/data-verification' },
-  { Icon: Megaphone, title: 'Event Marketing', body: 'Pre-show, post-show and ABM programs that turn the guest list into booked meetings.', to: '/solutions/pre-show-marketing' },
-  { Icon: Rocket, title: 'Account-Based', body: 'Target the exact accounts attending a show across email, ads and direct mail.', to: '/solutions/account-based-marketing' },
+const competitive = [
+  { icon: 'Building2', title: 'Exhibitor insights', body: 'Know who’s exhibiting, where their booth is and who makes the decisions before the show opens.' },
+  { icon: 'Database', title: 'Attendee email lists', body: 'Verified, opt-in attendee contacts segmented by role, seniority and industry.' },
+  { icon: 'RefreshCw', title: 'Fresh and reliable', body: 'Records are re-verified each edition, so you never work a list that went stale months ago.' },
+  { icon: 'Megaphone', title: 'Pre- & post-event ready', body: 'Reach buyers before the doors open and follow up while the show is still fresh.' },
 ]
 
-const steps = [
-  { title: 'Pick your shows & audience', body: 'Tell us the events and roles you want — attendees, exhibitors or visitors. We translate them into precise filters.' },
-  { title: 'Get counts & a sample', body: 'See matched volume and a free sample to validate fit and quality before you commit.' },
-  { title: 'Verify & deliver', body: 'We re-verify the segment and deliver as CSV/XLSX or straight into your CRM.' },
-  { title: 'Run pre- & post-show', body: 'Launch outreach before the doors open and follow up while leads are still warm.' },
+const sourcing = [
+  { icon: 'Search', title: 'Data building', body: 'We compile attendee, exhibitor and visitor records from each event using documented, opt-in sources.' },
+  { icon: 'ShieldCheck', title: 'Data verification', body: 'Every email and phone is checked against live signals so your sends land and your domain stays clean.' },
+  { icon: 'BadgeCheck', title: 'Data validation', body: 'Records are deduplicated, normalized and scored before delivery — accurate the day you receive them.' },
 ]
+
+const optIn = [
+  { icon: Search, title: 'Sourcing', body: 'We identify the events and audiences that match your plan.' },
+  { icon: UserCheck, title: 'Opt-in permission', body: 'Contacts are gathered through a documented opt-in process.' },
+  { icon: ShieldCheck, title: 'Verification', body: 'Emails and phones are validated against live signals.' },
+  { icon: BadgeCheck, title: 'Validation', body: 'Records are deduplicated, enriched and scored.' },
+  { icon: Send, title: 'Delivery', body: 'A CRM-ready file lands within two business days.' },
+]
+
+const faqs = [
+  { q: 'Where does your event data come from?', a: 'We compile records from each show through documented, opt-in sources and public business information, then verify every contact before delivery. We can walk your compliance team through sourcing on request.' },
+  { q: 'Is the data compliant with GDPR and CAN-SPAM?', a: 'Yes. Our sourcing and handling are aligned with GDPR, CAN-SPAM and CASL, and each record carries its opt-in source so legal can sign off quickly.' },
+  { q: 'How fresh are the lists?', a: 'Records are re-verified each event edition, and most orders are delivered within two business days so you’re working data that’s accurate today — not months old.' },
+  { q: 'Can I get a free sample first?', a: 'Absolutely. Tell us the shows and audience you’re targeting and we’ll return matched counts and a free sample so you can validate fit before you commit.' },
+]
+
+function EventVisual() {
+  const rows = [['Global Tech Expo ’26', '12,480'], ['MedDevice Summit', '6,210'], ['LogiWorld Fair', '9,034']]
+  return (
+    <div className="rounded-3xl border border-white/10 bg-card p-5 shadow-lift">
+      <div className="flex items-center gap-2 border-b border-white/10 pb-3 text-sm font-semibold text-white"><CalendarDays className="h-4 w-4 text-accent" /> Upcoming events</div>
+      <div className="mt-3 space-y-2">
+        {rows.map(([n, c]) => (
+          <div key={n} className="flex items-center justify-between rounded-xl bg-navy-soft px-3 py-2.5">
+            <span className="text-sm font-medium text-white">{n}</span>
+            <span className="rounded-full bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent">{c} attendees</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ProfileVisual() {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-card p-5 shadow-lift">
+      <div className="flex items-center gap-3 border-b border-white/10 pb-4">
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-600 text-sm font-semibold text-white">AC</span>
+        <div>
+          <div className="text-sm font-semibold text-white">Alexandra Chen</div>
+          <div className="text-xs text-ink-muted">VP Engineering · Northwind</div>
+        </div>
+        <span className="ml-auto flex items-center gap-1 text-xs font-medium text-accent"><BadgeCheck className="h-4 w-4" /> Verified</span>
+      </div>
+      <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
+        {[['Email', 'a.chen@northwind.co'], ['Direct dial', '+1 (415) •••'], ['Event', 'Global Tech Expo ’26'], ['Pass type', 'Delegate']].map(([k, v]) => (
+          <div key={k} className="rounded-lg bg-navy-soft px-3 py-2">
+            <div className="text-ink-muted">{k}</div>
+            <div className="mt-0.5 font-medium text-white">{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   useSeo()
-  const cases = caseStudyPosts.slice(0, 3)
-  const posts = blogPosts.slice(0, 3)
-
   return (
     <>
       <Hero />
 
-      {/* Client marquee */}
-      <div className="border-y border-surface-muted bg-white py-8">
-        <div className="container-shell">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">Trusted by event marketers at fast-growing companies</p>
-          <div className="mt-6"><Marquee items={clients} /></div>
+      {/* 2 — category strip */}
+      <div className="border-y border-white/10 bg-navy py-6">
+        <div className="container-shell flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm font-semibold uppercase tracking-[0.14em] text-white/60">
+          {categories.map((c, i) => (
+            <span key={c} className="flex items-center gap-3">
+              {i > 0 && <span className="h-1.5 w-1.5 rounded-full bg-accent/70" />}
+              {c}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Value props */}
+      {/* 3 — Elevate B2B success */}
       <Section>
-        <SectionHeading eyebrow={`Why ${brand.name}`} title="Event data your team can actually campaign on" description="Quality, show-level accuracy and compliance are the difference between booked meetings and a spam folder. We obsess over all three." />
-        <div className="mt-12"><FeatureCards items={valueProps} columns={4} /></div>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading align="left" eyebrow="Events data" title="Elevate B2B success with events data" description="Every trade show is a room full of in-market buyers. We turn that room into a verified, segment-ready contact list you can act on before, during and after the event." className="!max-w-none" />
+            <div className="mt-8"><Button to="/event-data" variant="navy" size="lg">Browse more events <ArrowRight className="h-4 w-4" /></Button></div>
+          </div>
+          <Reveal delay={0.1}><EventVisual /></Reveal>
+        </div>
       </Section>
 
-      {/* Solutions */}
+      {/* 4 — Connecting you to precise data */}
       <Section tone="subtle">
-        <SectionHeading eyebrow="What we do" title="One partner for the whole event-to-pipeline journey" description="From the guest list to the booked meeting — pick a single service or run the full motion with us." />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {solutions.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.06}>
-              <Link to={s.to} className="group flex h-full flex-col rounded-2xl border border-surface-muted bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
-                <span className="inline-grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white"><s.Icon className="h-5 w-5" /></span>
-                <h3 className="mt-4 text-lg font-bold text-ink">{s.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{s.body}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">Learn more <ArrowRight className="h-3.5 w-3.5" /></span>
-              </Link>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading align="left" eyebrow="Precision" title="Connecting you to precise B2B event contact data" description="Each record is mapped to the specific show and edition, then enriched with the role, seniority and verified contact details your team needs to personalize and prioritize." className="!max-w-none" />
+            <div className="mt-8"><Button to="/event-data" variant="accent" size="lg">Explore event data <ArrowRight className="h-4 w-4" /></Button></div>
+          </div>
+          <Reveal delay={0.1} className="lg:order-first"><ProfileVisual /></Reveal>
+        </div>
+      </Section>
+
+      {/* 5 — Stats counters */}
+      <Section tone="night">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.06} className="rounded-2xl border border-white/10 bg-card p-6 text-center shadow-soft">
+              <Counter value={s.value} className="block font-display text-4xl font-bold tracking-tight text-gradient sm:text-5xl" />
+              <div className="mt-1.5 text-sm text-ink-muted">{s.label}</div>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      {/* Stats band */}
-      <Section tone="subtle">
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <SectionHeading align="left" eyebrow="By the numbers" title="Scale without sacrificing quality" description="A data foundation big enough to cover every major show — and clean enough to trust." />
-          <StatGrid stats={brand.metrics} />
+      {/* 6 — Why choose us */}
+      <Section>
+        <SectionHeading eyebrow="Why choose us" title="Get the competitive edge" description="Everything you need to make the most of every event you attend or sponsor." />
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-2">
+          <Reveal>
+            <div className="grid grid-cols-2 gap-4">
+              {[Building2, Database, RefreshCw, Megaphone].map((Icon, i) => (
+                <div key={i} className="grid aspect-square place-items-center rounded-3xl border border-white/10 bg-card shadow-soft">
+                  <Icon className="h-12 w-12 text-accent" />
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <div className="grid gap-5">
+            {competitive.map((c, i) => {
+              const Icon = { Building2, Database, RefreshCw, Megaphone }[c.icon]
+              return (
+                <Reveal key={c.title} delay={i * 0.05} className="flex gap-4">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border-2 border-accent text-accent"><Icon className="h-5 w-5" /></span>
+                  <div>
+                    <h3 className="text-base font-semibold text-white">{c.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-ink-muted">{c.body}</p>
+                  </div>
+                </Reveal>
+              )
+            })}
+          </div>
         </div>
       </Section>
 
-      {/* Process */}
-      <Section>
-        <SectionHeading eyebrow="How it works" title="From show list to pipeline in four steps" />
-        <div className="mt-12"><Steps steps={steps} /></div>
+      {/* 7 — Verified high-impact data */}
+      <Section tone="subtle">
+        <SectionHeading eyebrow="Our process" title="Your source for verified, high-impact data" description="Three disciplines stand behind every list we deliver." />
+        <div className="mt-12"><FeatureCards items={sourcing} columns={3} /></div>
       </Section>
 
-      {/* Case studies */}
-      {cases.length > 0 && (
-        <Section tone="subtle">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading align="left" eyebrow="Proof" title="Results, not promises" className="!mx-0" />
-            <Button to="/case-studies" variant="ghost">All case studies <ArrowRight className="h-4 w-4" /></Button>
-          </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {cases.map((c, i) => (
-              <Reveal key={c.path} delay={i * 0.06}>
-                <Link to={c.path} className="group flex h-full flex-col justify-between rounded-2xl border border-surface-muted bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
-                  <div>
-                    <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700">{c.category}</span>
-                    <h3 className="mt-4 text-lg font-bold text-ink">{c.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-muted line-clamp-3">{c.excerpt}</p>
-                  </div>
-                  {c.headline && (
-                    <div className="mt-5 border-t border-surface-muted pt-4">
-                      <span className="font-display text-3xl font-extrabold text-gradient">{c.headline.value}</span>
-                      <span className="ml-1.5 text-sm text-ink-muted">{c.headline.label}</span>
-                    </div>
-                  )}
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* Testimonials — auto-scrolling loop */}
+      {/* 8 — How we work / opt-in process */}
       <Section>
-        <SectionHeading eyebrow="Testimonials" title="Teams that switched, stayed" />
+        <SectionHeading eyebrow="How we work" title="A documented opt-in process" description="From sourcing to delivery, every record follows the same five accountable steps." />
+        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {optIn.map((s, i) => (
+            <Reveal key={s.title} delay={i * 0.06} className="relative text-center">
+              <div className="relative mx-auto grid h-20 w-20 place-items-center rounded-full border border-white/10 bg-card shadow-soft">
+                <s.icon className="h-8 w-8 text-accent" />
+                <span className="absolute -right-1 -top-1 grid h-7 w-7 place-items-center rounded-full bg-brand-600 text-xs font-bold text-white">{i + 1}</span>
+              </div>
+              <h3 className="mt-4 text-base font-semibold text-white">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">{s.body}</p>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* 9 — Testimonials carousel */}
+      <Section tone="night">
+        <SectionHeading eyebrow="Testimonials" title="Trusted by thousands of event professionals" />
         <div className="group mask-fade-x relative mt-12 overflow-hidden">
           <div className="flex w-max gap-5 animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
             {[...testimonials, ...testimonials].map((t, i) => (
-              <div key={i} className="w-[320px] shrink-0 sm:w-[360px]" aria-hidden={i >= testimonials.length}>
-                <TestimonialCard {...t} />
-              </div>
+              <div key={i} className="w-[320px] shrink-0 sm:w-[360px]" aria-hidden={i >= testimonials.length}><TestimonialCard {...t} /></div>
             ))}
           </div>
         </div>
+        <div className="mt-10"><Marquee items={clients} /></div>
       </Section>
 
-      {/* Blog preview */}
-      {posts.length > 0 && (
-        <Section tone="subtle">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading align="left" eyebrow="From the blog" title="Ideas worth stealing" className="!mx-0" />
-            <Button to="/blog" variant="ghost">Read the blog <ArrowRight className="h-4 w-4" /></Button>
-          </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((p, i) => (
-              <Reveal key={p.path} delay={i * 0.06}>
-                <Link to={p.path} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-surface-muted bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
-                  <div className="relative h-36 bg-brand-gradient bg-[length:200%_auto]">
-                    <div className="absolute inset-0 bg-grid-glow [background-size:24px_24px] opacity-25" />
-                    <span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-ink">{p.category}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <h3 className="text-base font-bold text-ink group-hover:text-brand-700">{p.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted line-clamp-2">{p.excerpt}</p>
-                    <span className="mt-3 text-xs text-ink-muted">{p.date}</span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      <Section className="!pt-0">
-        <CTABand
-          title="Turn your next show into pipeline"
-          body="Get a free, targeted sample of verified attendee or exhibitor data — matched to the events that matter to you."
-          primary={{ label: 'Get a free sample', to: '/contact' }}
-          secondary={{ label: 'Explore event data', to: '/event-data' }}
-        />
+      {/* 10 — FAQ */}
+      <Section>
+        <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
+        <div className="mt-10"><FAQ items={faqs} /></div>
       </Section>
     </>
   )
