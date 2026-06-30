@@ -74,10 +74,10 @@ export default function Home() {
       </Section>
 
       {/* Stats band */}
-      <Section tone="night">
+      <Section tone="subtle">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <SectionHeading align="left" light eyebrow="By the numbers" title="Scale without sacrificing quality" description="A data foundation big enough to cover every major show — and clean enough to trust." />
-          <StatGrid stats={brand.metrics} light />
+          <SectionHeading align="left" eyebrow="By the numbers" title="Scale without sacrificing quality" description="A data foundation big enough to cover every major show — and clean enough to trust." />
+          <StatGrid stats={brand.metrics} />
         </div>
       </Section>
 

@@ -17,7 +17,7 @@ function MiniCard({ children, className, delay = 0, dur = 5, reduce }) {
     <motion.div
       animate={reduce ? {} : { y: [0, -10, 0] }}
       transition={{ duration: dur, repeat: Infinity, ease: 'easeInOut', delay }}
-      className={'absolute rounded-2xl border border-white/10 bg-white/95 p-3 shadow-lift backdrop-blur ' + className}
+      className={'absolute rounded-2xl border border-surface-muted bg-white p-3 shadow-lift ' + className}
     >
       {children}
     </motion.div>
@@ -27,12 +27,11 @@ function MiniCard({ children, className, delay = 0, dur = 5, reduce }) {
 function HeroVisual({ reduce }) {
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
-      <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-brand-500/30 to-accent/25 blur-3xl" />
-      {/* main attendee-list card */}
+      <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-brand-100 to-accent/20 blur-2xl" />
       <motion.div
         animate={reduce ? {} : { y: [0, -8, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative rounded-3xl border border-white/10 bg-white p-5 shadow-lift"
+        className="relative rounded-3xl border border-surface-muted bg-white p-5 shadow-lift"
       >
         <div className="flex items-center justify-between border-b border-surface-muted pb-3">
           <div className="flex items-center gap-2 text-sm font-bold text-ink"><CalendarDays className="h-4 w-4 text-brand-600" /> Global Tech Expo ’26</div>
@@ -56,10 +55,7 @@ function HeroVisual({ reduce }) {
 
       <MiniCard reduce={reduce} delay={0.4} dur={5.4} className="left-[-7%] bottom-[18%] w-36">
         <div className="text-2xs font-semibold uppercase tracking-wide text-ink-muted">Deliverability</div>
-        <div className="mt-1 flex items-end gap-2">
-          <span className="font-display text-2xl font-extrabold text-gradient">96%</span>
-          <span className="mb-1 text-2xs text-ink-muted">SLA</span>
-        </div>
+        <div className="mt-1 flex items-end gap-2"><span className="font-display text-2xl font-extrabold text-gradient">96%</span><span className="mb-1 text-2xs text-ink-muted">SLA</span></div>
       </MiniCard>
 
       <MiniCard reduce={reduce} delay={1.1} dur={6} className="right-[-6%] top-[10%] w-32">
@@ -83,31 +79,29 @@ export default function Hero() {
   })
 
   return (
-    <section className="relative isolate overflow-hidden bg-night text-white">
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-brand-radial" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-glow [background-size:46px_46px] opacity-50 [mask-image:radial-gradient(120%_90%_at_50%_20%,#000,transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-brand-500/30 blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-accent/15 blur-3xl" />
+    <section className="relative isolate overflow-hidden bg-white">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-faint [background-size:46px_46px] opacity-60 [mask-image:radial-gradient(120%_90%_at_50%_10%,#000,transparent_70%)]" />
+      <div aria-hidden className="pointer-events-none absolute -left-24 -top-10 h-80 w-80 rounded-full bg-brand-100 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
 
       <div className="container-shell relative grid items-center gap-14 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:py-24">
         <div>
-          <motion.span {...appear(0.05)} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent-soft">
+          <motion.span {...appear(0.05)} className="inline-flex items-center gap-2 rounded-full border border-surface-muted bg-brand-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
             <Sparkles className="h-3.5 w-3.5" /> Verified trade-show & event data
           </motion.span>
-          <motion.h1 {...appear(0.15)} className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-balance sm:text-5xl lg:text-[3.4rem]">
-            Turn every trade show into{' '}
-            <span className="bg-gradient-to-r from-brand-300 via-brand-200 to-accent-soft bg-clip-text text-transparent">predictable pipeline</span>
+          <motion.h1 {...appear(0.15)} className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-balance text-ink sm:text-5xl lg:text-[3.4rem]">
+            Turn every trade show into <span className="text-gradient">predictable pipeline</span>
           </motion.h1>
-          <motion.p {...appear(0.3)} className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 text-pretty">
+          <motion.p {...appear(0.3)} className="mt-6 max-w-xl text-lg leading-relaxed text-ink-muted text-pretty">
             {brand.name} gives B2B teams verified attendee, exhibitor and visitor contact data from 40,000+ events — so you reach the right buyers before, during and after every show.
           </motion.p>
           <motion.div {...appear(0.42)} className="mt-8 flex flex-wrap gap-3">
-            <Button to="/contact" variant="accent" size="lg">Get a free sample <ArrowRight className="h-4 w-4" /></Button>
-            <Button to="/event-data" variant="outline" size="lg" className="border-white/25 bg-white/5 text-white hover:bg-white/15 hover:text-white">Explore event data</Button>
+            <Button to="/contact" variant="gradient" size="lg">Get a free sample <ArrowRight className="h-4 w-4" /></Button>
+            <Button to="/event-data" variant="outline" size="lg">Explore event data</Button>
           </motion.div>
-          <motion.ul {...appear(0.55)} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
+          <motion.ul {...appear(0.55)} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
             {['No commitment', '96% deliverability SLA', 'Opt-in & compliant'].map((t) => (
-              <li key={t} className="flex items-center gap-1.5"><Check className="h-4 w-4 text-accent" strokeWidth={3} /> {t}</li>
+              <li key={t} className="flex items-center gap-1.5"><Check className="h-4 w-4 text-accent-deep" strokeWidth={3} /> {t}</li>
             ))}
           </motion.ul>
         </div>

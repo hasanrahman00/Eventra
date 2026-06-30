@@ -17,13 +17,13 @@ export default function ArticleTemplate({ page }) {
   return (
     <>
       {/* Header */}
-      <section className="relative overflow-hidden bg-night text-white">
-        <div className="pointer-events-none absolute inset-0 bg-brand-radial" />
+      <section className="relative overflow-hidden border-b border-surface-muted bg-surface-subtle">
+        <div className="pointer-events-none absolute inset-0 bg-grid-faint [background-size:46px_46px] opacity-50 [mask-image:radial-gradient(110%_90%_at_50%_0%,#000,transparent_75%)]" />
         <div className="container-shell relative py-14 lg:py-16">
-          <Breadcrumbs trail={trail} light />
-          <span className="mt-5 inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-accent-soft">{page.category}</span>
-          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-balance sm:text-4xl lg:text-5xl">{page.title}</h1>
-          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-white/60">
+          <Breadcrumbs trail={trail} />
+          <span className="mt-5 inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">{page.category}</span>
+          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-balance text-ink sm:text-4xl lg:text-5xl">{page.title}</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-muted">
             {page.author && <span>{page.author}</span>}
             {page.date && <span>{page.date}</span>}
             {page.readMins && <span>{page.readMins} min read</span>}

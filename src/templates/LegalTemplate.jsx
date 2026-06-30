@@ -6,11 +6,11 @@ export default function LegalTemplate({ page }) {
   useSeo({ title: page.title, description: `${page.title} — Eventra.` })
   return (
     <>
-      <section className="bg-night text-white">
+      <section className="border-b border-surface-muted bg-surface-subtle">
         <div className="container-shell py-14">
-          <Breadcrumbs trail={[{ label: page.title }]} light />
-          <h1 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl">{page.title}</h1>
-          {page.updated && <p className="mt-3 text-sm text-white/60">Last updated {page.updated}</p>}
+          <Breadcrumbs trail={[{ label: page.title }]} />
+          <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{page.title}</h1>
+          {page.updated && <p className="mt-3 text-sm text-ink-muted">Last updated {page.updated}</p>}
         </div>
       </section>
       <Section>

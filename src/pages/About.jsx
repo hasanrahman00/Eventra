@@ -36,10 +36,10 @@ export default function About() {
         </div>
       </Section>
 
-      <Section tone="night">
+      <Section tone="subtle">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <SectionHeading align="left" light eyebrow="By the numbers" title="Scale you can trust" description="Big enough to cover every major show — clean enough to put your name behind." />
-          <StatGrid stats={brand.metrics} light />
+          <SectionHeading align="left" eyebrow="By the numbers" title="Scale you can trust" description="Big enough to cover every major show — clean enough to put your name behind." />
+          <StatGrid stats={brand.metrics} />
         </div>
       </Section>
 
