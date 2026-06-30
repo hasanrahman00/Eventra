@@ -9,8 +9,8 @@ export default {
     },
     extend: {
       colors: {
-        ink: { DEFAULT: '#1c1745', muted: '#6a6592' },
-        night: { DEFAULT: '#120e2e', soft: '#1b1640' },
+        ink: { DEFAULT: '#161a23', muted: '#5b6472' },
+        night: { DEFAULT: '#0d0f14', soft: '#171a22' },
         brand: {
           50: '#f1f0fe',
           100: '#e6e3fd',
@@ -24,7 +24,7 @@ export default {
           900: '#372c7f',
         },
         accent: { DEFAULT: '#f59e0b', soft: '#fcd34d', deep: '#b45309' },
-        surface: { DEFAULT: '#ffffff', subtle: '#f7f6fd', muted: '#e9e7f8' },
+        surface: { DEFAULT: '#ffffff', subtle: '#f6f7f9', muted: '#e6e8ec' },
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
