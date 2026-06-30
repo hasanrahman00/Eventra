@@ -1,24 +1,18 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
-// Fade + rise on scroll-into-view. Honors prefers-reduced-motion.
-export default function Reveal({ children, delay = 0, y = 16, className, as = 'div' }) {
+// Fade-up on scroll-into-view. `as` swaps the motion element (e.g. 'li').
+export default function Reveal({ children, className, delay = 0, as = 'div', y = 16 }) {
   const reduce = useReducedMotion()
-  const MotionTag = motion[as] || motion.div
-
-  if (reduce) {
-    const Tag = as
-    return <Tag className={className}>{children}</Tag>
-  }
-
+  const M = motion[as] || motion.div
   return (
-    <MotionTag
-      className={className}
-      initial={{ opacity: 0, y }}
+    <M
+      initial={{ opacity: 0, y: reduce ? 0 : y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.55, delay: reduce ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
     >
       {children}
-    </MotionTag>
+    </M>
   )
 }

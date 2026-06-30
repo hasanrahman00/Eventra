@@ -1,112 +1,77 @@
-import { Link } from 'react-router-dom'
-import { Calendar, Clock, ArrowLeft, Quote } from 'lucide-react'
 import { Section } from '../components/Section.jsx'
-import { Breadcrumbs, StatGrid, CTABand } from '../components/blocks.jsx'
+import { Breadcrumbs, CTABand, StatGrid } from '../components/blocks.jsx'
 import Reveal from '../components/Reveal.jsx'
 import useSeo from '../lib/useSeo.js'
+import { Quote } from 'lucide-react'
 
-function Block({ block }) {
-  switch (block.type) {
-    case 'heading':
-      return <h2 className="mt-10 text-2xl font-bold text-ink">{block.text}</h2>
-    case 'quote':
-      return (
-        <blockquote className="my-8 rounded-2xl border-l-4 border-brand-500 bg-surface-subtle p-6">
-          <Quote className="h-6 w-6 text-brand-300" />
-          <p className="mt-2 text-lg font-medium italic text-ink">{block.text}</p>
-          {block.cite && <footer className="mt-2 text-sm text-ink-muted">— {block.cite}</footer>}
-        </blockquote>
-      )
-    case 'list':
-      return (
-        <ul className="my-5 list-disc space-y-2 pl-5 text-ink/80">
-          {block.items.map((it, i) => (
-            <li key={i} className="leading-relaxed">{it}</li>
-          ))}
-        </ul>
-      )
-    case 'paragraph':
-    default:
-      return <p className="mt-4 leading-relaxed text-ink/80">{block.text}</p>
-  }
+const kindMeta = {
+  blog: { label: 'Blog', base: '/blog' },
+  'case-study': { label: 'Case Study', base: '/case-studies' },
 }
 
-// Blog post + case study detail page.
 export default function ArticleTemplate({ page }) {
-  useSeo(page.seo)
-  const isCase = page.kind === 'case-study'
-  const backTo = isCase ? '/case-studies' : '/blog'
-  const backLabel = isCase ? 'All case studies' : 'All articles'
+  useSeo({ title: page.title, description: page.excerpt })
+  const meta = kindMeta[page.kind] || kindMeta.blog
+  const trail = [{ label: meta.label, to: meta.base }, { label: page.title }]
 
   return (
     <>
-      <div className="relative overflow-hidden border-b border-surface-muted bg-surface-subtle">
-        <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-100 blur-3xl" />
-        <div className="container-shell relative py-12 lg:py-16">
-          <Breadcrumbs trail={[{ label: isCase ? 'Case Studies' : 'Blog', to: backTo }, { label: page.title }]} />
-          <div className="mt-5 max-w-3xl">
-            <span className="eyebrow">{page.category}</span>
-            <h1 className="mt-4 text-3xl font-extrabold leading-tight text-balance sm:text-4xl">
-              {page.title}
-            </h1>
-            {page.excerpt && <p className="mt-4 text-lg text-ink-muted text-pretty">{page.excerpt}</p>}
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-muted">
-              {page.author && <span className="font-medium text-ink">{page.author}</span>}
-              {page.date && (
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" /> {page.date}
-                </span>
-              )}
-              {page.readingTime && (
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-4 w-4" /> {page.readingTime}
-                </span>
-              )}
-            </div>
+      {/* Header */}
+      <section className="relative overflow-hidden bg-night text-white">
+        <div className="pointer-events-none absolute inset-0 bg-brand-radial" />
+        <div className="container-shell relative py-14 lg:py-16">
+          <Breadcrumbs trail={trail} light />
+          <span className="mt-5 inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-accent-soft">{page.category}</span>
+          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-balance sm:text-4xl lg:text-5xl">{page.title}</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-white/60">
+            {page.author && <span>{page.author}</span>}
+            {page.date && <span>{page.date}</span>}
+            {page.readMins && <span>{page.readMins} min read</span>}
           </div>
         </div>
-      </div>
+      </section>
 
-      <Section className="!py-14">
+      {/* Results band (case studies) */}
+      {page.metrics?.length > 0 && (
+        <Section tone="subtle" className="!py-12">
+          <StatGrid stats={page.metrics} />
+        </Section>
+      )}
+
+      {/* Body */}
+      <Section>
         <div className="mx-auto max-w-3xl">
-          {isCase && page.client && (
-            <div className="mb-8 flex flex-wrap items-center gap-4 rounded-2xl border border-surface-muted bg-white p-5 shadow-soft">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-ink text-lg font-extrabold text-white">
-                {page.client.name?.[0]}
-              </div>
-              <div>
-                <div className="font-bold text-ink">{page.client.name}</div>
-                <div className="text-sm text-ink-muted">{page.client.industry}</div>
-              </div>
-            </div>
+          {page.excerpt && <p className="text-xl font-medium leading-relaxed text-ink">{page.excerpt}</p>}
+          {(page.sections || []).map((s, i) => (
+            <Reveal key={i} className="mt-10">
+              {s.heading && <h2 className="text-2xl font-bold tracking-tight text-ink">{s.heading}</h2>}
+              {(s.paras || []).map((p, j) => <p key={j} className="mt-4 leading-relaxed text-ink-muted">{p}</p>)}
+              {s.bullets?.length > 0 && (
+                <ul className="mt-4 space-y-2">
+                  {s.bullets.map((b, k) => (
+                    <li key={k} className="flex gap-3 text-ink-muted"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />{b}</li>
+                  ))}
+                </ul>
+              )}
+            </Reveal>
+          ))}
+
+          {page.quote && (
+            <figure className="mt-12 rounded-2xl border border-surface-muted bg-surface-subtle p-7">
+              <Quote className="h-8 w-8 text-brand-300" />
+              <blockquote className="mt-3 text-lg font-medium leading-relaxed text-ink">“{page.quote.quote}”</blockquote>
+              <figcaption className="mt-4 text-sm text-ink-muted"><span className="font-bold text-ink">{page.quote.name}</span>, {page.quote.role}{page.quote.company ? `, ${page.quote.company}` : ''}</figcaption>
+            </figure>
           )}
-
-          {isCase && page.results?.length > 0 && (
-            <div className="mb-10">
-              <StatGrid stats={page.results} />
-            </div>
-          )}
-
-          <Reveal as="article" className="text-base">
-            {(page.body || []).map((block, i) => (
-              <Block key={i} block={block} />
-            ))}
-          </Reveal>
-
-          <div className="mt-12 border-t border-surface-muted pt-6">
-            <Link to={backTo} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700">
-              <ArrowLeft className="h-4 w-4" /> {backLabel}
-            </Link>
-          </div>
         </div>
       </Section>
 
       <Section className="!pt-0">
         <CTABand
-          title={isCase ? 'Want results like these?' : 'Turn this into pipeline'}
-          body="Get a free data sample matched to your ideal customer profile and a plan to reach them."
+          title="Put verified event data behind your next campaign"
+          body="Tell us the shows and audience you’re targeting — we’ll send matched counts and a free sample."
           primary={{ label: 'Get a free sample', to: '/contact' }}
-          secondary={{ label: 'Talk to sales', to: '/contact' }}
+          secondary={{ label: 'Explore event data', to: '/event-data' }}
         />
       </Section>
     </>

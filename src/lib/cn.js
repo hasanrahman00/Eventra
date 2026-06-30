@@ -1,4 +1,9 @@
-// Tiny classnames joiner — filters falsy values and joins with spaces.
-export function cn(...parts) {
-  return parts.flat().filter(Boolean).join(' ')
+// Tiny classNames helper: flattens, drops falsey values, joins with spaces.
+export function cn(...args) {
+  return args
+    .flat(Infinity)
+    .filter(Boolean)
+    .join(' ')
 }
+
+export default cn

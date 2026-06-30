@@ -1,14 +1,14 @@
 import { cn } from '../lib/cn.js'
 import Reveal from './Reveal.jsx'
 
-// Vertical rhythm wrapper. `tone` flips the palette for alternating bands.
+const tones = {
+  default: 'bg-surface text-ink',
+  subtle: 'bg-surface-subtle text-ink',
+  muted: 'bg-surface-muted text-ink',
+  night: 'bg-night text-white',
+}
+
 export function Section({ children, className, tone = 'default', id }) {
-  const tones = {
-    default: 'bg-surface',
-    subtle: 'bg-surface-subtle',
-    muted: 'bg-surface-muted',
-    ink: 'bg-ink text-white',
-  }
   return (
     <section id={id} className={cn('py-16 sm:py-20 lg:py-24', tones[tone], className)}>
       <div className="container-shell">{children}</div>
@@ -17,12 +17,7 @@ export function Section({ children, className, tone = 'default', id }) {
 }
 
 export function SectionHeading({
-  eyebrow,
-  title,
-  description,
-  align = 'center',
-  light = false,
-  className,
+  eyebrow, title, description, align = 'center', light = false, className,
 }) {
   return (
     <Reveal
@@ -33,24 +28,19 @@ export function SectionHeading({
         className,
       )}
     >
-      {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+      {eyebrow && (
+        <span className={cn('eyebrow', light && 'text-accent-soft', align === 'center' && 'justify-center')}>
+          <span className={cn('h-px w-6', light ? 'bg-accent-soft/50' : 'bg-brand-400/50')} />
+          {eyebrow}
+        </span>
+      )}
       {title && (
-        <h2
-          className={cn(
-            'mt-4 text-3xl font-extrabold leading-tight text-balance sm:text-4xl',
-            light ? 'text-white' : 'text-ink',
-          )}
-        >
+        <h2 className={cn('mt-4 text-3xl font-extrabold leading-tight tracking-tight text-balance sm:text-4xl', light ? 'text-white' : 'text-ink')}>
           {title}
         </h2>
       )}
       {description && (
-        <p
-          className={cn(
-            'mt-4 text-lg leading-relaxed text-pretty',
-            light ? 'text-white/70' : 'text-ink-muted',
-          )}
-        >
+        <p className={cn('mt-4 text-lg leading-relaxed text-pretty', light ? 'text-white/70' : 'text-ink-muted')}>
           {description}
         </p>
       )}

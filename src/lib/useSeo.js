@@ -1,29 +1,17 @@
 import { useEffect } from 'react'
 import brand from '../site/brand.js'
 
-function setMeta(attr, key, value) {
-  if (!value) return
-  let el = document.head.querySelector(`meta[${attr}="${key}"]`)
-  if (!el) {
-    el = document.createElement('meta')
-    el.setAttribute(attr, key)
-    document.head.appendChild(el)
-  }
-  el.setAttribute('content', value)
-}
-
-// Lightweight SEO head manager (no extra deps). Updates title + meta on mount.
-export function useSeo({ title, description } = {}) {
+// Sets document title + meta description per page.
+export default function useSeo({ title, description } = {}) {
   useEffect(() => {
-    const full = title ? `${title} | ${brand.name}` : `${brand.name} — ${brand.tagline}`
-    document.title = full
+    document.title = title ? `${title} — ${brand.name}` : `${brand.name} — ${brand.tagline}`
     const desc = description || brand.description
-    setMeta('name', 'description', desc)
-    setMeta('property', 'og:title', full)
-    setMeta('property', 'og:description', desc)
-    setMeta('property', 'og:type', 'website')
-    setMeta('name', 'twitter:card', 'summary_large_image')
+    let tag = document.querySelector('meta[name="description"]')
+    if (!tag) {
+      tag = document.createElement('meta')
+      tag.setAttribute('name', 'description')
+      document.head.appendChild(tag)
+    }
+    tag.setAttribute('content', desc)
   }, [title, description])
 }
-
-export default useSeo

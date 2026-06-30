@@ -1,111 +1,59 @@
-import { ArrowRight, Compass, ShieldCheck, HeartHandshake, Target } from 'lucide-react'
-import { Section, SectionHeading } from '../components/Section.jsx'
-import { StatGrid, CTABand } from '../components/blocks.jsx'
 import PageHero from '../components/PageHero.jsx'
+import { Section, SectionHeading } from '../components/Section.jsx'
+import { StatGrid, FeatureCards, CTABand } from '../components/blocks.jsx'
 import Reveal from '../components/Reveal.jsx'
 import useSeo from '../lib/useSeo.js'
 import brand from '../site/brand.js'
 
 const values = [
-  { icon: Compass, title: 'Outcomes over volume', body: 'We measure ourselves on the meetings you book, not on how many records we can ship.' },
-  { icon: ShieldCheck, title: 'Quality is non-negotiable', body: 'If a record won’t pass verification, it doesn’t reach your CRM. Full stop.' },
-  { icon: HeartHandshake, title: 'Partner, not vendor', body: 'We win when your show wins, so we tune segments and timing alongside your team.' },
-  { icon: Target, title: 'Mapped to the moment', body: 'Every contact is tied to a real event and audience — precision is the whole point.' },
-]
-
-const timeline = [
-  { year: '2015', text: `${brand.name} is founded to fix the scramble for clean trade-show attendee lists.` },
-  { year: '2018', text: 'Launches an automated verification pipeline and crosses 10,000 covered events.' },
-  { year: '2021', text: 'Adds pre- and post-show marketing services; opens EMEA operations in London.' },
-  { year: '2024', text: 'Introduces exhibitor intelligence and per-edition show mapping for ABM teams.' },
-  { year: '2026', text: `Serves event marketers in 150+ countries with ${brand.metrics[0].value} verified contacts across ${brand.metrics[1].value} events.` },
+  { icon: 'BadgeCheck', title: 'Accuracy over volume', body: 'We would rather hand you a smaller, verified list than a bloated one that bounces. Quality is the product.' },
+  { icon: 'ShieldCheck', title: 'Compliant by default', body: 'Documented opt-in sourcing and alignment with GDPR, CAN-SPAM and CASL — so your team can send with confidence.' },
+  { icon: 'CalendarDays', title: 'Event-native', body: 'We live and breathe trade shows. Every record is mapped to the show, edition and audience it came from.' },
+  { icon: 'Handshake', title: 'Partners, not list sellers', body: 'We win when your events drive pipeline, so we measure ourselves on meetings booked — not records shipped.' },
 ]
 
 export default function About() {
-  useSeo({ title: 'About Us', description: `${brand.name} turns the world’s trade shows and expos into pipeline for B2B teams worldwide.` })
+  useSeo({ title: 'About', description: `${brand.name} turns the world’s trade shows and conferences into verified pipeline.` })
   return (
     <>
       <PageHero
-        eyebrow="About us"
-        headline="We turn the world’s events into clean, reachable pipeline"
-        subcopy={`Since ${brand.foundedYear}, ${brand.name} has helped B2B teams reach trade-show buyers and exhibitors with data they can actually trust.`}
-        trail={[{ label: 'Company' }, { label: 'About Us' }]}
-        highlights={['Founded ' + brand.foundedYear, '150+ countries', '40K+ events covered']}
-        primary={{ label: 'Work with us', to: '/contact' }}
-        secondary={{ label: 'See careers', to: '/careers' }}
+        eyebrow="About Eventra"
+        headline="We turn the world’s events into pipeline"
+        subcopy={`Since ${brand.foundedYear}, ${brand.name} has helped B2B teams reach the right buyers around the trade shows, expos and conferences that matter most to them.`}
+        trail={[{ label: 'About' }]}
       />
 
       <Section>
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <span className="eyebrow">Our story</span>
-            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-balance sm:text-4xl">
-              Born from one frustration: the last-minute scramble for the attendee list
-            </h2>
+            <span className="eyebrow"><span className="h-px w-6 bg-brand-400/50" />Our story</span>
+            <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Built by event marketers, for event marketers</h2>
           </Reveal>
-          <Reveal delay={0.08} className="prose-muted space-y-4">
-            <p>
-              {brand.name} started when our founders — former event marketers and data engineers — got tired of
-              scrambling for a usable attendee list days before every show, only to watch campaigns bounce on stale data.
-            </p>
-            <p>
-              We built the verification and show-mapping engine we wished we’d had: one that ties every contact to a
-              real event and treats each record as a promise to a sender’s reputation. Today that engine powers data,
-              enrichment and event-marketing programs for teams of every size.
-            </p>
-            <p>
-              We’re still obsessed with the same thing — making sure the next message you send reaches a real buyer
-              who chose to be in the room.
-            </p>
+          <Reveal delay={0.08} className="space-y-4">
+            <p className="leading-relaxed text-ink-muted">Eventra started after years of watching great trade-show booths go to waste. Teams spent fortunes on space and travel, collected a pile of badge scans, then let the leads go cold because the data was messy and slow to clean.</p>
+            <p className="leading-relaxed text-ink-muted">So we built the data layer events were missing: verified attendee, exhibitor and visitor contacts, mapped to the specific show and ready to action before the doors even open. Today we cover {brand.metrics[1].value} events across {brand.metrics[3].value} countries.</p>
           </Reveal>
         </div>
       </Section>
 
-      <Section tone="ink">
-        <SectionHeading light eyebrow="Where we are today" title="A foundation built to scale with you" />
-        <div className="mt-12">
+      <Section tone="night">
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
+          <SectionHeading align="left" light eyebrow="By the numbers" title="Scale you can trust" description="Big enough to cover every major show — clean enough to put your name behind." />
           <StatGrid stats={brand.metrics} light />
         </div>
       </Section>
 
       <Section tone="subtle">
-        <SectionHeading eyebrow="What we value" title="The principles behind every record we ship" />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {values.map((v, i) => (
-            <Reveal key={v.title} delay={i * 0.06}>
-              <div className="h-full rounded-2xl border border-surface-muted bg-white p-6 shadow-soft">
-                <span className="inline-grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                  <v.icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-4 text-base font-bold text-ink">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{v.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section>
-        <SectionHeading eyebrow="Milestones" title="A decade of building trust in event data" />
-        <div className="mx-auto mt-12 max-w-3xl">
-          <ol className="relative border-l border-surface-muted">
-            {timeline.map((t, i) => (
-              <Reveal as="li" key={t.year} delay={i * 0.05} className="mb-8 ml-6">
-                <span className="absolute -left-2.5 grid h-5 w-5 place-items-center rounded-full bg-brand-600 ring-4 ring-white" />
-                <div className="text-sm font-extrabold text-brand-600">{t.year}</div>
-                <p className="mt-1 text-ink/80">{t.text}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
+        <SectionHeading eyebrow="What we value" title="How we work" />
+        <div className="mt-10"><FeatureCards items={values} columns={4} /></div>
       </Section>
 
       <Section className="!pt-0">
         <CTABand
-          title="Let’s build event pipeline together"
-          body="Get a free sample matched to the shows and audiences that matter to you — and see the quality for yourself."
+          title="Let’s make your next event pay for itself"
+          body="Tell us the shows you’re targeting and we’ll send matched counts and a free data sample."
           primary={{ label: 'Get a free sample', to: '/contact' }}
-          secondary={{ label: `Why ${brand.name}`, to: '/why-us' }}
+          secondary={{ label: 'See our solutions', to: '/solutions' }}
         />
       </Section>
     </>
