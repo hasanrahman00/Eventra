@@ -161,7 +161,7 @@ export function FAQ({ items = [] }) {
 }
 
 /* ---------- Testimonial card (5-star) ---------- */
-export function TestimonialCard({ quote, name, role, company }) {
+export function TestimonialCard({ quote, name, role, company, avatar }) {
   return (
     <figure className="flex h-full flex-col rounded-2xl border border-white/10 bg-card p-6 shadow-soft">
       <div className="flex gap-0.5 text-[#f5b50a]">
@@ -170,9 +170,13 @@ export function TestimonialCard({ quote, name, role, company }) {
       <Quote className="mt-3 h-6 w-6 text-brand-400" />
       <blockquote className="mt-2 flex-1 text-sm leading-relaxed text-white/85">“{quote}”</blockquote>
       <figcaption className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-600 text-xs font-semibold text-white">
-          {name.split(' ').map((p) => p[0]).slice(0, 2).join('')}
-        </span>
+        {avatar ? (
+          <img src={avatar} alt={name} loading="lazy" className="h-10 w-10 rounded-full object-cover ring-2 ring-white/10" />
+        ) : (
+          <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-600 text-xs font-semibold text-white">
+            {name.split(' ').map((p) => p[0]).slice(0, 2).join('')}
+          </span>
+        )}
         <span>
           <span className="block text-sm font-semibold text-white">{name}</span>
           <span className="block text-xs text-ink-muted">{role}{company ? `, ${company}` : ''}</span>

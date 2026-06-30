@@ -68,7 +68,7 @@ function ProfileVisual() {
   return (
     <div className="rounded-3xl border border-white/10 bg-card p-5 shadow-lift">
       <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-        <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-600 text-sm font-semibold text-white">AC</span>
+        <img src="/avatars/alexandra-chen.jpg" alt="Alexandra Chen" loading="lazy" className="h-12 w-12 rounded-full object-cover ring-2 ring-white/10" />
         <div>
           <div className="text-sm font-semibold text-white">Alexandra Chen</div>
           <div className="text-xs text-ink-muted">VP Engineering · Northwind</div>
