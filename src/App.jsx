@@ -6,6 +6,7 @@ import ScrollToTop from './components/ScrollToTop.jsx'
 import { getContentRoutes } from './data/registry.jsx'
 
 import Home from './pages/Home.jsx'
+import Events from './pages/Events.jsx'
 import EventData from './pages/EventData.jsx'
 import Solutions from './pages/Solutions.jsx'
 import About from './pages/About.jsx'
@@ -23,6 +24,7 @@ export default function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/event-data" element={<EventData />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/about" element={<About />} />

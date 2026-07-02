@@ -42,7 +42,7 @@ export const legalLinks = [
 // Flat header navigation — a simple, dropdown-free events-site menu.
 export const headerNav = [
   { label: 'Home', to: '/' },
-  { label: 'Events', to: '/event-data' },
+  { label: 'Events', to: '/events' },
   { label: 'Resources', to: '/blog' },
   { label: 'About Us', to: '/about' },
   { label: 'Contact Us', to: '/contact' },
