@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { CalendarDays, MapPin, Search, ArrowRight, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { Search, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import PageHero from '../components/PageHero.jsx'
 import { Section } from '../components/Section.jsx'
-import Reveal from '../components/Reveal.jsx'
 import useSeo from '../lib/useSeo.js'
+import { cn } from '../lib/cn.js'
 
 const PER_PAGE = 20
 
@@ -35,6 +35,7 @@ export default function Events() {
   useSeo({ title: 'Events', description: 'Browse 4,000+ trade shows, expos and conferences — and request a verified attendee or exhibitor list for any of them.' })
   const [all, setAll] = useState(null)
   const [params, setParams] = useSearchParams()
+  const navigate = useNavigate()
   const page = Math.max(1, parseInt(params.get('page') || '1', 10) || 1)
   const q = params.get('q') || ''
   const [query, setQuery] = useState(q)
@@ -60,7 +61,7 @@ export default function Events() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }, [current, q])
 
-  const goto = (p) => setParams((prev) => { const n = new URLSearchParams(prev); n.set('page', String(p)); return n }, { replace: false })
+  const goto = (p) => setParams((prev) => { const n = new URLSearchParams(prev); n.set('page', String(p)); return n })
   const submitSearch = (e) => {
     e.preventDefault()
     setParams((prev) => {
@@ -70,6 +71,9 @@ export default function Events() {
       return n
     })
   }
+
+  const th = 'px-5 py-4 text-left text-sm font-semibold text-brand-400 sm:text-base'
+  const td = 'px-5 py-4 align-top text-sm'
 
   return (
     <>
@@ -105,30 +109,40 @@ export default function Events() {
               Showing <span className="font-semibold text-white">{startIdx + 1}–{Math.min(startIdx + PER_PAGE, total)}</span> of <span className="font-semibold text-white">{total.toLocaleString()}</span> events{q && <> for “<span className="text-white">{q}</span>”</>}
             </p>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {slice.map((e, i) => (
-                <Reveal key={startIdx + i} delay={(i % 4) * 0.04}>
-                  <div className="group flex h-full flex-col rounded-2xl border border-white/10 bg-card p-5 shadow-soft transition hover:-translate-y-1 hover:border-accent/50">
-                    <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent">
-                      <CalendarDays className="h-3.5 w-3.5" /> {dateRange(e.start, e.end)}
-                    </span>
-                    <h3 className="mt-3 line-clamp-2 text-base font-semibold leading-snug text-white">{e.name}</h3>
-                    <p className="mt-2 flex items-start gap-1.5 text-sm leading-snug text-ink-muted">
-                      <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-400" /> {e.location}
-                    </p>
-                    <Link to="/contact" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                      Get attendee list <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
-                </Reveal>
-              ))}
+            {/* Static table — no inner scroll */}
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-card shadow-soft">
+              <table className="w-full table-fixed">
+                <thead>
+                  <tr className="border-b border-white/10 bg-navy-soft">
+                    <th className={cn(th, 'w-1/2')}>Name</th>
+                    <th className={cn(th, 'hidden w-1/4 sm:table-cell')}>Date</th>
+                    <th className={cn(th, 'w-1/2 sm:w-1/4')}>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {slice.map((e, i) => (
+                    <tr
+                      key={startIdx + i}
+                      onClick={() => navigate('/contact')}
+                      className={cn('cursor-pointer border-b border-white/5 transition last:border-0 hover:bg-brand-600/10', i % 2 && 'bg-navy-soft/40')}
+                    >
+                      <td className={td}>
+                        <Link to="/contact" onClick={(ev) => ev.stopPropagation()} className="font-semibold leading-snug text-white hover:text-accent sm:text-base">{e.name}</Link>
+                        <span className="mt-1 block text-xs text-ink-muted sm:hidden">{dateRange(e.start, e.end)}</span>
+                      </td>
+                      <td className={cn(td, 'hidden text-ink-muted sm:table-cell')}>{dateRange(e.start, e.end)}</td>
+                      <td className={cn(td, 'text-ink-muted')}>{e.location}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <nav aria-label="Pagination" className="mt-12 flex flex-wrap items-center justify-center gap-1.5">
-                <button onClick={() => goto(current - 1)} disabled={current === 1} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-card text-white/80 transition hover:border-accent/50 hover:text-white disabled:opacity-40" aria-label="Previous page">
-                  <ChevronLeft className="h-4 w-4" />
+              <nav aria-label="Pagination" className="mt-10 flex flex-wrap items-center justify-center gap-1.5">
+                <button onClick={() => goto(current - 1)} disabled={current === 1} className="inline-flex h-9 items-center gap-1 rounded-lg border border-white/10 bg-card px-3 text-sm font-medium text-white/80 transition hover:border-accent/50 hover:text-white disabled:opacity-40">
+                  <ChevronLeft className="h-4 w-4" /> Previous
                 </button>
                 {pageList(current, totalPages).map((p, i) =>
                   p === '…' ? (
@@ -142,8 +156,8 @@ export default function Events() {
                     </button>
                   ),
                 )}
-                <button onClick={() => goto(current + 1)} disabled={current === totalPages} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-card text-white/80 transition hover:border-accent/50 hover:text-white disabled:opacity-40" aria-label="Next page">
-                  <ChevronRight className="h-4 w-4" />
+                <button onClick={() => goto(current + 1)} disabled={current === totalPages} className="inline-flex h-9 items-center gap-1 rounded-lg border border-white/10 bg-card px-3 text-sm font-medium text-white/80 transition hover:border-accent/50 hover:text-white disabled:opacity-40">
+                  Next <ChevronRight className="h-4 w-4" />
                 </button>
               </nav>
             )}
